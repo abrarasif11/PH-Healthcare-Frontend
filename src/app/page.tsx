@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <div>
       <h2>Home Page</h2>
-      <Button variant="outlined">Outlined</Button>
+      <Button>Button</Button>
     </div>
   );
 };

@@ -10,4 +10,21 @@ export const theme = createTheme({
       light: "#f8f8f8",
     },
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: "contained",
+      },
+      styleOverrides: {
+        root: {
+          padding: "8px 24px",
+        },
+      },
+    },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: "lg",
+      },
+    },
+  },
 });
