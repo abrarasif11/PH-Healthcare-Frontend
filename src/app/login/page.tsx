@@ -57,7 +57,6 @@ const Login = () => {
                     variant="outlined"
                     type="email"
                     size="small"
-                    fullWidth={true}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -66,12 +65,17 @@ const Login = () => {
                     variant="outlined"
                     type="password"
                     size="small"
-                    fullWidth={true}
                   ></TextField>
                 </Grid>
               </Grid>
 
-              <Typography textAlign="end" component="p" fontWeight={300}>
+              <Typography
+                mt={1}
+                mb={1}
+                textAlign="end"
+                component="p"
+                fontWeight={300}
+              >
                 Forgot Password?
               </Typography>
 
