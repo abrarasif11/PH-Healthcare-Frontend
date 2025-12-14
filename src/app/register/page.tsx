@@ -14,13 +14,18 @@ import React from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-type Inputs = {
+interface IPatientData {
   name: string;
-  password: string;
+
   email: string;
   contactNumber: string;
   address: string;
-};
+}
+
+interface IPatientRegisterFormData {
+  password: string;
+  patient: IPatientData;
+}
 
 const RegisterPage = () => {
   const {
@@ -28,8 +33,9 @@ const RegisterPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<IPatientRegisterFormData>();
+  const onSubmit: SubmitHandler<IPatientRegisterFormData> = (data) =>
+    console.log(data);
 
   return (
     <Container>
@@ -74,7 +80,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="text"
                     size="small"
-                    {...register("name")}
+                    {...register("patient.name")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -83,7 +89,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="email"
                     size="small"
-                    {...register("email")}
+                    {...register("patient.email")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -101,7 +107,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="tel"
                     size="small"
-                    {...register("contactNumber")}
+                    {...register("patient.contactNumber")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -110,7 +116,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="text"
                     size="small"
-                    {...register("address")}
+                    {...register("patient.address")}
                   ></TextField>
                 </Grid>
               </Grid>
