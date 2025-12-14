@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Button,
@@ -7,65 +5,17 @@ import {
   CardActions,
   CardContent,
   Container,
-  Grid,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Link from "next/link";
+import Grid from "@mui/material/Grid";
 
-type Doctor = {
-  id: string;
-  name: string;
-  qualification: string;
-  designation: string;
-  profilePhoto?: string | null;
-};
-
-const TopRatedDoctor = () => {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const res = await fetch(
-          "http://localhost:3000/api/v1/doctor?page=1&limit=3"
-        );
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch doctors");
-        }
-
-        const json = await res.json();
-        setDoctors(json.data ?? []);
-      } catch (err) {
-        console.error(err);
-        setError("Unable to load doctors");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDoctors();
-  }, []);
-
-  if (loading) {
-    return (
-      <Box textAlign="center" my={10}>
-        <Typography variant="h6">Loading doctors...</Typography>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box textAlign="center" my={10}>
-        <Typography color="error">{error}</Typography>
-      </Box>
-    );
-  }
-
+const TopRatedDoctors = async () => {
+  const res = await fetch("http://localhost:3000/api/v1/doctor?page=1&limit=3");
+  const { data: doctors } = await res.json();
+  //   console.log(doctors);
   return (
     <Box
       sx={{
@@ -75,49 +25,79 @@ const TopRatedDoctor = () => {
         clipPath: "polygon(0 0, 100% 25%, 100% 100%, 0 75%)",
       }}
     >
-      {/* Section Header */}
-      <Box textAlign="center">
-        <Typography variant="h4" fontWeight={700}>
+      <Box sx={{ textAlign: "center" }}>
+        <Typography variant="h4" component="h1" fontWeight={700}>
           Our Top Rated Doctors
         </Typography>
-        <Typography fontSize={18} mt={2}>
+        <Typography component="p" fontSize={18} fontWeight={400} sx={{ mt: 2 }}>
           Access to expert physicians and surgeons, advanced technologies
         </Typography>
-        <Typography fontSize={18}>
+        <Typography component="p" fontSize={18} fontWeight={400}>
           and top-quality surgery facilities right here.
         </Typography>
       </Box>
 
-      {/* Doctors */}
       <Container sx={{ mt: 4 }}>
         <Grid container spacing={3}>
-          {doctors.map((doctor) => (
-            <Grid item key={doctor.id} xs={12} md={4}>
-              <Card>
+          {doctors.map((doctor: any) => (
+            <Grid item key={doctor.id} xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 {/* Image */}
-                <Box sx={{ height: 280, position: "relative" }}>
+                <Box
+                  sx={{
+                    height: 280,
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
                   <Image
                     src={doctor.profilePhoto || "/doctor-placeholder.png"}
                     alt={doctor.name}
                     fill
-                    sizes="(max-width: 900px) 100vw, 33vw"
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                     style={{ objectFit: "cover" }}
                   />
                 </Box>
 
                 {/* Content */}
-                <CardContent>
+                <CardContent sx={{ flexGrow: 1 }}>
                   <Typography variant="h6" fontWeight={600}>
                     {doctor.name}
                   </Typography>
+
                   <Typography color="text.secondary" mt={0.5}>
                     {doctor.qualification}, {doctor.designation}
+                  </Typography>
+
+                  {/* Address */}
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    mt={1}
+                    sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                  >
+                    <LocationOnIcon fontSize="small" />
+                    {doctor.address}
                   </Typography>
                 </CardContent>
 
                 {/* Actions */}
-                <CardActions sx={{ justifyContent: "space-between", px: 2 }}>
-                  <Button size="small">Book Now</Button>
+                <CardActions
+                  sx={{
+                    justifyContent: "space-between",
+                    px: 2,
+                    pb: 2,
+                  }}
+                >
+                  <Button size="small" variant="contained">
+                    Book Now
+                  </Button>
                   <Button size="small" variant="outlined">
                     View Profile
                   </Button>
@@ -136,4 +116,4 @@ const TopRatedDoctor = () => {
   );
 };
 
-export default TopRatedDoctor;
+export default TopRatedDoctors;
