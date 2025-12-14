@@ -15,6 +15,8 @@ import logo from "../../assets/svgs/logo.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { modifyPayload } from "@/utils/modifyFormData";
 import { registerPatient } from "@/services/actions/registerPatient";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface IPatientData {
   name: string;
@@ -30,6 +32,7 @@ interface IPatientRegisterFormData {
 }
 
 const RegisterPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -41,7 +44,11 @@ const RegisterPage = () => {
     console.log(data);
     try {
       const res = await registerPatient(data);
-      console.log(res);
+      // console.log(res);
+      if (res?.data?.id) {
+        toast.success(res?.message);
+        router.push("/login");
+      }
     } catch (err: any) {
       console.error(err.message);
     }
