@@ -15,13 +15,10 @@ import logo from "../../assets/svgs/logo.svg";
 
 const RegisterPage = () => {
   return (
-    <Container
-      sx={{
-        padding: "50px",
-      }}
-    >
+    <Container>
       <Stack
         sx={{
+          height: "100vh",
           alignItems: "center",
           justifyContent: "center",
         }}
