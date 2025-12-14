@@ -14,6 +14,7 @@ import React from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { modifyPayload } from "@/utils/modifyFormData";
+import { registerPatient } from "@/services/actions/registerPatient";
 
 interface IPatientData {
   name: string;
@@ -35,9 +36,14 @@ const RegisterPage = () => {
     watch,
     formState: { errors },
   } = useForm<IPatientRegisterFormData>();
-  const onSubmit: SubmitHandler<IPatientRegisterFormData> = (values) => {
+  const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
     const data = modifyPayload(values);
-    console.log(data);
+    // console.log(data);
+    try {
+      const res = await registerPatient(data);
+    } catch (err: any) {
+      console.error(err.message);
+    }
   };
 
   return (
