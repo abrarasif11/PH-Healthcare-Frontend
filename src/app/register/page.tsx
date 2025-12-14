@@ -12,8 +12,25 @@ import {
 import Image from "next/image";
 import React from "react";
 import logo from "../../assets/svgs/logo.svg";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  name: string;
+  password: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+};
 
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
     <Container>
       <Stack
@@ -49,14 +66,15 @@ const RegisterPage = () => {
             </Box>
           </Stack>
           <Box>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3} my={1} ml={5}>
-                <Grid item md={12}>
+                <Grid item md={6}>
                   <TextField
                     label="Name"
                     variant="outlined"
+                    type="text"
                     size="small"
-                    fullWidth={true}
+                    {...register("name")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -65,7 +83,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="email"
                     size="small"
-                    fullWidth={true}
+                    {...register("email")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -74,7 +92,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="password"
                     size="small"
-                    fullWidth={true}
+                    {...register("password")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -83,7 +101,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="tel"
                     size="small"
-                    fullWidth={true}
+                    {...register("contactNumber")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -92,7 +110,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="text"
                     size="small"
-                    fullWidth={true}
+                    {...register("address")}
                   ></TextField>
                 </Grid>
               </Grid>
