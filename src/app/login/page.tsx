@@ -13,8 +13,9 @@ import Image from "next/image";
 import React from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { userLogin } from "@/services/actions/userLogin";
 
-type FormValues = {
+export type FormValues = {
   email: string;
   password: string;
 };
@@ -30,6 +31,8 @@ const Login = () => {
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     console.log(values);
     try {
+      const res = await userLogin(values);
+      console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
