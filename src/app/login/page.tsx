@@ -14,6 +14,7 @@ import React from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
+import { storeUserInfo } from "@/services/auth.services";
 
 export type FormValues = {
   email: string;
@@ -32,7 +33,10 @@ const Login = () => {
     console.log(values);
     try {
       const res = await userLogin(values);
-      console.log(res);
+      if (res?.data?.accessToken) {
+        storeUserInfo({ accessToken: res?.data?.accessToken });
+      }
+      // console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
