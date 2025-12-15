@@ -18,6 +18,7 @@ import { storeUserInfo } from "@/services/auth.services";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PHForms from "@/components/Forms/PHForms";
+import PHInput from "@/components/Forms/PHInput";
 
 const Login = () => {
   const router = useRouter();
@@ -75,22 +76,20 @@ const Login = () => {
             <PHForms onSubmit={handleLogin}>
               <Grid container spacing={3} my={1} ml={5}>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Email"
-                    variant="outlined"
                     type="email"
-                    size="small"
-                    {...register("email")}
-                  ></TextField>
+                    fullWidth={true}
+                    name="email"
+                  />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Password"
-                    variant="outlined"
                     type="password"
-                    size="small"
-                    {...register("password")}
-                  ></TextField>
+                    fullWidth={true}
+                    name="password"
+                  />
                 </Grid>
               </Grid>
 

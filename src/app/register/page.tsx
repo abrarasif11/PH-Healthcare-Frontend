@@ -105,6 +105,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     type="text"
                     size="small"
+                    fullWidth={true}
                     {...register("patient.name")}
                   ></TextField>
                 </Grid>
