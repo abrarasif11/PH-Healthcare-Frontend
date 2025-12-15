@@ -12,28 +12,17 @@ import {
 import Image from "next/image";
 import React from "react";
 import logo from "../../assets/svgs/logo.svg";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PHForms from "@/components/Forms/PHForms";
 
-export type FormValues = {
-  email: string;
-  password: string;
-};
-
 const Login = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+  const handleLogin = async (values: FieldValues) => {
     console.log(values);
     try {
       const res = await userLogin(values);
@@ -83,7 +72,7 @@ const Login = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForms onSubmit={handleSubmit(onSubmit)}>
+            <PHForms onSubmit={handleLogin}>
               <Grid container spacing={3} my={1} ml={5}>
                 <Grid item md={6}>
                   <TextField
@@ -130,7 +119,7 @@ const Login = () => {
                   Create an account
                 </Link>
               </Typography>
-            </form>
+            </PHForms>
           </Box>
         </Box>
       </Stack>

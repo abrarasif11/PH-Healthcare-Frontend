@@ -9,13 +9,16 @@ import {
 
 type TFormProps = {
   children: React.ReactNode;
+  onSubmit: SubmitHandler<FieldValues>;
 };
 
-const PHForms = ({ children }: TFormProps) => {
+const PHForms = ({ children, onSubmit }: TFormProps) => {
   const methods = useForm();
   const { handleSubmit } = methods;
-  const submit: SubmitHandler<FieldValues> = (data) => console.log(data);
-
+  const submit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+    onSubmit(data);
+  };
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(submit)}>{children}</form>
