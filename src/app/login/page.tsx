@@ -15,6 +15,8 @@ import logo from "../../assets/svgs/logo.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export type FormValues = {
   email: string;
@@ -22,6 +24,7 @@ export type FormValues = {
 };
 
 const Login = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -34,7 +37,9 @@ const Login = () => {
     try {
       const res = await userLogin(values);
       if (res?.data?.accessToken) {
+        toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
+        router.push("/");
       }
       // console.log(res);
     } catch (err: any) {

@@ -1,12 +1,18 @@
 "use client";
-import { getUserInfo } from "@/services/auth.services";
+import { getUserInfo, removeUser } from "@/services/auth.services";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Navbar = () => {
   const userinfo = getUserInfo();
   console.log(userinfo);
+  const router = useRouter();
+  const handleLogout = () => {
+    removeUser();
+    router.refresh();
+  };
   return (
     <Container>
       <Stack
@@ -23,15 +29,9 @@ const Navbar = () => {
           sx={{
             textDecoration: "none",
             color: "inherit",
-            "&:hover": {
-              textDecoration: "none",
-            },
-            "&:focus": {
-              textDecoration: "none",
-            },
-            "&:active": {
-              textDecoration: "none",
-            },
+            "&:hover": { textDecoration: "none" },
+            "&:focus": { textDecoration: "none" },
+            "&:active": { textDecoration: "none" },
           }}
         >
           P
@@ -40,13 +40,13 @@ const Navbar = () => {
           </Box>{" "}
           Health Care
         </Typography>
+
         <Stack direction="row" justifyContent="space-between" gap={4}>
           <Typography
             component={Link}
             href="/consultation"
             sx={{
               textDecoration: "none",
-
               "&:hover, &:active, &:focus, &:visited": {
                 textDecoration: "none",
               },
@@ -60,7 +60,6 @@ const Navbar = () => {
             href="/health-care"
             sx={{
               textDecoration: "none",
-
               "&:hover, &:active, &:focus, &:visited": {
                 textDecoration: "none",
               },
@@ -73,8 +72,11 @@ const Navbar = () => {
           <Typography>Diagnostics</Typography>
           <Typography>NGOs</Typography>
         </Stack>
-        {userinfo?.userId ? (
-          <Button color="error">Log Out</Button>
+
+        {userinfo ? (
+          <Button color="error" onClick={handleLogout}>
+            Log Out
+          </Button>
         ) : (
           <Button
             component={Link}
