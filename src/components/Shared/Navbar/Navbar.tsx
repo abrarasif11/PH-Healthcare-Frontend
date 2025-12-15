@@ -6,6 +6,7 @@ import React from "react";
 
 const Navbar = () => {
   const userinfo = getUserInfo();
+  console.log(userinfo);
   return (
     <Container>
       <Stack
@@ -72,17 +73,21 @@ const Navbar = () => {
           <Typography>Diagnostics</Typography>
           <Typography>NGOs</Typography>
         </Stack>
-        <Button
-          component={Link}
-          href="/login"
-          sx={{
-            "&:active": {
-              textDecoration: "none",
-            },
-          }}
-        >
-          Login
-        </Button>
+        {userinfo?.userId ? (
+          <Button color="error">Log Out</Button>
+        ) : (
+          <Button
+            component={Link}
+            href="/login"
+            sx={{
+              "&:active": {
+                textDecoration: "none",
+              },
+            }}
+          >
+            Login
+          </Button>
+        )}
       </Stack>
     </Container>
   );
