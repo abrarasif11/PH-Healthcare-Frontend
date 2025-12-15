@@ -12,8 +12,29 @@ import {
 import Image from "next/image";
 import React from "react";
 import logo from "../../assets/svgs/logo.svg";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    console.log(values);
+    try {
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <Container>
       <Stack
@@ -49,7 +70,7 @@ const Login = () => {
             </Box>
           </Stack>
           <Box>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3} my={1} ml={5}>
                 <Grid item md={6}>
                   <TextField
@@ -57,6 +78,7 @@ const Login = () => {
                     variant="outlined"
                     type="email"
                     size="small"
+                    {...register("email")}
                   ></TextField>
                 </Grid>
                 <Grid item md={6}>
@@ -65,6 +87,7 @@ const Login = () => {
                     variant="outlined"
                     type="password"
                     size="small"
+                    {...register("password")}
                   ></TextField>
                 </Grid>
               </Grid>
@@ -86,7 +109,7 @@ const Login = () => {
                 fullWidth={true}
                 type="submit"
               >
-                Register
+                Login
               </Button>
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}
