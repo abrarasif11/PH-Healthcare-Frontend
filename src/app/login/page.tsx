@@ -81,6 +81,7 @@ const Login = () => {
                     type="email"
                     fullWidth={true}
                     name="email"
+                    required={true}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -89,6 +90,7 @@ const Login = () => {
                     type="password"
                     fullWidth={true}
                     name="password"
+                    required={true}
                   />
                 </Grid>
               </Grid>
