@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { modifyPayload } from "@/utils/modifyFormData";
@@ -49,6 +49,7 @@ export const defaultValues = {
 };
 
 const RegisterPage = () => {
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleRegister = async (values: FieldValues) => {
@@ -65,6 +66,8 @@ const RegisterPage = () => {
         if (result?.data?.accessToken) {
           storeUserInfo({ accessToken: result?.data?.accessToken });
           router.push("/");
+        } else {
+          setError(res.message);
         }
       }
     } catch (err: any) {
@@ -106,6 +109,21 @@ const RegisterPage = () => {
               </Typography>
             </Box>
           </Stack>
+          {error && (
+            <Box>
+              <Typography
+                sx={{
+                  backgroundColor: "red",
+                  padding: "1px",
+                  borderRadius: "2px",
+                  color: "white",
+                  marginTop: "5px",
+                }}
+              >
+                {error}
+              </Typography>
+            </Box>
+          )}
           <Box>
             <PHForms
               onSubmit={handleRegister}
