@@ -38,6 +38,16 @@ export const validationSchema = z.object({
   patient: patientValidationSchema,
 });
 
+export const defaultValues = {
+  password: "",
+  patient: {
+    name: "",
+    email: "",
+    contactNumber: "",
+    address: "",
+  },
+};
+
 const RegisterPage = () => {
   const router = useRouter();
 
@@ -100,15 +110,11 @@ const RegisterPage = () => {
             <PHForms
               onSubmit={handleRegister}
               resolver={zodResolver(validationSchema)}
+              defaultValues={defaultValues}
             >
               <Grid container spacing={3} my={1} ml={5}>
                 <Grid item md={6}>
-                  <PHInput
-                    label="Name"
-                    fullWidth={true}
-                    name="patient.name"
-                    required={true}
-                  />
+                  <PHInput label="Name" fullWidth={true} name="patient.name" />
                 </Grid>
                 <Grid item md={6}>
                   <PHInput
@@ -116,7 +122,6 @@ const RegisterPage = () => {
                     type="email"
                     fullWidth={true}
                     name="patient.email"
-                    required={true}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -124,7 +129,6 @@ const RegisterPage = () => {
                     label="Password"
                     type="password"
                     name="password"
-                    required={true}
                   ></PHInput>
                 </Grid>
                 <Grid item md={6}>
@@ -132,7 +136,6 @@ const RegisterPage = () => {
                     label="Contact Number"
                     type="tel"
                     name="patient.contactNumber"
-                    required={true}
                   ></PHInput>
                 </Grid>
                 <Grid item md={6}>
@@ -140,7 +143,6 @@ const RegisterPage = () => {
                     label="Address"
                     type="text"
                     name="patient.address"
-                    required={true}
                   ></PHInput>
                 </Grid>
               </Grid>
