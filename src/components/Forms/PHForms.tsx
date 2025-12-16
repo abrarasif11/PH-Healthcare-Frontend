@@ -9,6 +9,7 @@ import {
 
 type TFormConfig = {
   resolver?: any;
+  defaultValues?: Record<string, any>;
 };
 
 type TFormProps = {
@@ -16,11 +17,19 @@ type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
 } & TFormConfig;
 
-const PHForms = ({ children, onSubmit, resolver }: TFormProps) => {
+const PHForms = ({
+  children,
+  onSubmit,
+  resolver,
+  defaultValues,
+}: TFormProps) => {
   const fromConfig: TFormConfig = {};
 
   if (resolver) {
     fromConfig["resolver"] = resolver;
+  }
+  if (defaultValues) {
+    fromConfig["defaultValues"] = defaultValues;
   }
   const methods = useForm(fromConfig);
   const { handleSubmit, reset } = methods;
