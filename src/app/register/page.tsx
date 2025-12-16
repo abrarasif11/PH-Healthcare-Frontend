@@ -6,7 +6,6 @@ import {
   Grid,
   Link,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -21,6 +20,23 @@ import { storeUserInfo } from "@/services/auth.services";
 import { userLogin } from "@/services/actions/userLogin";
 import PHForms from "@/components/Forms/PHForms";
 import PHInput from "@/components/Forms/PHInput";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+export const patientValidationSchema = z.object({
+  name: z.string().min(1, "Please enter your name!"),
+  email: z.string().email("Please enter a valid email address!"),
+  contactNumber: z
+    .string()
+    .regex(/^\d{11}$/, "Please provide a valid phone number!"),
+  address: z.string().min(1, "Please enter your address!"),
+});
+
+export const validationSchema = z.object({
+  password: z.string().min(6, "Must be at least 6 characters"),
+  patient: patientValidationSchema,
+});
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -81,7 +97,10 @@ const RegisterPage = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForms onSubmit={handleRegister}>
+            <PHForms
+              onSubmit={handleRegister}
+              resolver={zodResolver(validationSchema)}
+            >
               <Grid container spacing={3} my={1} ml={5}>
                 <Grid item md={6}>
                   <PHInput
