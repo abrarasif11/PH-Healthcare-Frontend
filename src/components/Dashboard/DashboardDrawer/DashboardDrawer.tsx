@@ -43,6 +43,10 @@ export default function DashboardDrawer({
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          background: "#F4F7FE",
+          boxShadow: 0,
+          borderBottom: "1px solid #ddd",
+          py: 1,
         }}
       >
         <Toolbar>
@@ -53,11 +57,26 @@ export default function DashboardDrawer({
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "primary.main" }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
+          <Box>
+            <Typography
+              variant="body2"
+              noWrap
+              component="div"
+              sx={{ color: "rgba(11, 17, 52, 0.6)" }}
+            >
+              Hi, User..
+            </Typography>
+            <Typography
+              variant="body2"
+              noWrap
+              component="div"
+              sx={{ color: "primary.main" }}
+            >
+              Welcome To, PH Health Care
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
