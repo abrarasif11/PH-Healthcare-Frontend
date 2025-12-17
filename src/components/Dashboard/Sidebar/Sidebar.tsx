@@ -11,31 +11,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import Image from "next/image";
 import logo from "../../../assets/svgs/logo.svg";
 import Link from "next/link";
 import { drawerItems } from "@/utils/drawerItems";
 import { UserRole } from "@/types";
+import SidebarItems from "./SidebarItems";
 
 const Sidebar = () => {
-  const drawer = (
-    <div>
-      <List>
-        {drawerItems("admin" as UserRole).map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
   return (
     <Box>
       <Stack
@@ -62,7 +46,11 @@ const Sidebar = () => {
         </Typography>
       </Stack>
 
-      {drawer}
+      <List>
+        {drawerItems("admin" as UserRole).map((item, index) => (
+          <SidebarItems key={index} index={index} item={item} />
+        ))}
+      </List>
     </Box>
   );
 };
