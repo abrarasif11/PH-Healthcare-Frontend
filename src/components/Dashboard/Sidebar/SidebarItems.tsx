@@ -12,17 +12,15 @@ import { DrawerItem } from "@/types";
 
 type IProps = {
   item: DrawerItem;
-  index: number;
 };
 
-const SidebarItems = ({ item, index }: IProps) => {
+const SidebarItems = ({ item }: IProps) => {
+  const linkPath = `/dashboard/${item.path}`;
   return (
-    <Link href="/">
+    <Link href={linkPath}>
       <ListItem disablePadding>
         <ListItemButton>
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
+          <ListItemIcon>{item.icon && <item.icon />}</ListItemIcon>
           <ListItemText primary={item.title} />
         </ListItemButton>
       </ListItem>
