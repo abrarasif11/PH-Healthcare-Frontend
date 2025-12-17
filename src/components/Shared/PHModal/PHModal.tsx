@@ -1,6 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import { styled, SxProps } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -18,28 +18,33 @@ export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function PHModal() {
-  const [open, setOpen] = React.useState(false);
+type TModalProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  children: React.ReactNode;
+  sx?: SxProps;
+};
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function PHModal({
+  open,
+  setOpen,
+  title,
+  children,
+}: TModalProps) {
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+          {title}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -53,23 +58,7 @@ export default function PHModal() {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
-        </DialogContent>
+        <DialogContent dividers>{children}</DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
             Save changes
