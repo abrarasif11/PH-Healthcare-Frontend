@@ -10,6 +10,11 @@ export type IMeta = {
 
 export type UserRole = keyof typeof USER_ROLE;
 
+export type ResponseSuccessType = {
+  data: any;
+  meta?: IMeta;
+};
+
 export interface DrawerItem {
   title: string;
   path: string;
@@ -17,3 +22,14 @@ export interface DrawerItem {
   icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
   child?: DrawerItem[];
 }
+
+export type IGenericErrorResponse = {
+  statusCode: number;
+  message: string;
+  errorMessages: IGenericErrorMessage[];
+};
+
+export type IGenericErrorMessage = {
+  path: string | number;
+  message: string;
+};

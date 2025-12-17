@@ -1,37 +1,55 @@
 import { authKey } from "@/contants/authKey";
+import {
+  IGenericErrorMessage,
+  IGenericErrorResponse,
+  ResponseSuccessType,
+} from "@/types";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
 const instance = axios.create();
+
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 6000;
 
-// Add a request interceptor
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(
+  function (config) {
+    const accessToken = getFromLocalStorage(authKey);
 
-    const accessToken = getFromLocalStorage(authKey)
-    if(accessToken){
-        config.headers.Authorization = accessToken
+    if (accessToken) {
+      config.headers.Authorization = accessToken;
     }
+
     return config;
-  }, function (error) {
-    // Do something with request error
+  },
+  function (error) {
     return Promise.reject(error);
   },
-  { synchronous: true, runWhen: () => /* This function returns true */}
+  {
+    synchronous: true,
+    runWhen: () => true,
+  }
 );
 
-// Add a response interceptor
-instance.interceptors.response.use(function onFulfilled(response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response;
-  }, function onRejected(error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
-  });
-
+instance.interceptors.response.use(
+  //@ts-ignore
+  function (response) {
+    const responseObject: ResponseSuccessType = {
+      data: response?.data?.data,
+      meta: response?.data?.meta,
+    };
+    return responseObject;
+  },
+  function (error) {
+    const responseObject: IGenericErrorResponse = {
+      statusCode: error?.response?.data?.statusCode || 500,
+      message: error?.response?.data?.message || "Something Went Wrong",
+      errorMessages: error?.response?.data?.message,
+    };
+    // return Promise.reject(error);
+    return responseObject;
+  }
+);
 
 export { instance };
