@@ -10,7 +10,15 @@ const specialtiesApi = baseApi.injectEndpoints({
         data,
       }),
     }),
+    getAllSpecialties: build.query({
+      query: () => ({
+        url: "/specialties",
+        method: "GET",
+        contentType: "application/json",
+      }),
+    }),
   }),
 });
 
-export const { useCreateSpecialtyMutation } = specialtiesApi;
+export const { useCreateSpecialtyMutation, useGetAllSpecialtiesQuery } =
+  specialtiesApi;
