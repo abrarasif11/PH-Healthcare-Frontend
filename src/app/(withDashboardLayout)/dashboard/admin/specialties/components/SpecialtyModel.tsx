@@ -11,7 +11,7 @@ type TProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SpecialistModal = ({ open, setOpen }: TProps) => {
+const SpecialtyModel = ({ open, setOpen }: TProps) => {
   const handleFormSubmit = (values: FieldValues) => {};
   return (
     <PHModal open={open} setOpen={setOpen} title="Create A New Specialty">
@@ -32,4 +32,4 @@ const SpecialistModal = ({ open, setOpen }: TProps) => {
   );
 };
 
-export default SpecialistModal;
+export default SpecialtyModel;
