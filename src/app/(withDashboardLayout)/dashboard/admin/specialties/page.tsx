@@ -25,16 +25,20 @@ const SpecialtiesPage = () => {
         <SpecialistModal open={isModalOpen} setOpen={setIsModalOpen} />
         <TextField size="small" placeholder="Search Specialties" />
       </Stack>
-      <Box>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          sx={{ border: 0 }}
-        />
-      </Box>
+      {!isLoading ? (
+        <Box>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            initialState={{ pagination: {} }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+            sx={{ border: 0 }}
+          />
+        </Box>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </Box>
   );
 };
