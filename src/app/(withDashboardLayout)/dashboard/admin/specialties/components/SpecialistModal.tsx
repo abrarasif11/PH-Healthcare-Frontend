@@ -21,7 +21,7 @@ const SpecialistModal = ({ open, setOpen }: TProps) => {
             <PHInput name="title" label="Title" />
           </Grid>
           <Grid item md={6}>
-            <PHFileUploader />
+            <PHFileUploader name="file" label="Upload File" />
           </Grid>
         </Grid>
         <Button sx={{ mt: 1 }} type="submit">
