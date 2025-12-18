@@ -16,6 +16,7 @@ const specialtiesApi = baseApi.injectEndpoints({
         method: "GET",
         contentType: "application/json",
       }),
+      providesTags: ["specialties"],
     }),
   }),
 });
