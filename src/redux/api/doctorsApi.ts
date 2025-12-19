@@ -14,20 +14,20 @@ export const doctorApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.doctor],
     }),
 
-    // getAllDoctors: build.query({
-    //   query: (arg: Record<string, any>) => ({
-    //     url: "/doctor",
-    //     method: "GET",
-    //     params: arg,
-    //   }),
-    //   transformResponse: (response: IDoctor[], meta: IMeta) => {
-    //     return {
-    //       doctors: response,
-    //       meta,
-    //     };
-    //   },
-    //   providesTags: [tagTypes.doctor],
-    // }),
+    getAllDoctors: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: "/doctor",
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: IDocto[], meta: IMeta) => {
+        return {
+          doctors: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.doctor],
+    }),
 
     // deleteDoctor: build.mutation({
     //   query: (id) => ({
