@@ -1,15 +1,11 @@
 import { Button, Grid } from "@mui/material";
-
+import { Gender } from "@/types/common";
 import { FieldValues } from "react-hook-form";
-
 import PHInput from "@/components/Forms/PHInput";
-
+import PHSelectField from "@/components/Forms/PHSelectField";
 import PHFullScreenModal from "@/components/Shared/PHModal/PHFullScreenModal";
-
 import { toast } from "sonner";
 import PHForms from "@/components/Forms/PHForms";
-import PHSelectField from "@/components/Forms/PHSelectField";
-import { Gender } from "@/types";
 
 type TProps = {
   open: boolean;
@@ -17,9 +13,9 @@ type TProps = {
 };
 
 const DoctorModal = ({ open, setOpen }: TProps) => {
-  //   const [createDoctor] = useCreateDoctorMutation();
+  const [createDoctor] = useCreateDoctorMutation();
   const handleFormSubmit = async (values: FieldValues) => {
-    // console.log(values);
+    console.log(values);
     values.doctor.experience = Number(values.doctor.experience);
     values.doctor.appointmentFee = Number(values.doctor.appointmentFee);
     // const data = modifyPayload(values);
@@ -128,7 +124,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput
-              name="doctor.appointmentFee"
+              name="doctor.apointmentFee"
               type="number"
               label="ApointmentFee"
               fullWidth={true}
