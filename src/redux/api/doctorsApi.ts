@@ -1,6 +1,7 @@
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 import { IMeta } from "@/types/common";
+import { IDoctor } from "@/types/doctor";
 
 export const doctorApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -20,7 +21,7 @@ export const doctorApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: IDocto[], meta: IMeta) => {
+      transformResponse: (response: IDoctor[], meta: IMeta) => {
         return {
           doctors: response,
           meta,
