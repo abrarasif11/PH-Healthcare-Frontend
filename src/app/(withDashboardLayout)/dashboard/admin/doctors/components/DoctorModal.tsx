@@ -8,6 +8,8 @@ import PHFullScreenModal from "@/components/Shared/PHModal/PHFullScreenModal";
 
 import { toast } from "sonner";
 import PHForms from "@/components/Forms/PHForms";
+import PHSelectField from "@/components/Forms/PHSelectField";
+import { Gender } from "@/types";
 
 type TProps = {
   open: boolean;
@@ -42,7 +44,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
       registrationNumber: "",
       gender: "",
       experience: 0,
-      apointmentFee: 0,
+      appointmentFee: 0,
       qualification: "",
       currentWorkingPlace: "",
       designation: "",
@@ -117,8 +119,8 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <PHSelectField
-              //   items={Gender}
+            <PHInput
+              items={Gender}
               name="doctor.gender"
               label="Gender"
               sx={{ mb: 2 }}
@@ -126,7 +128,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput
-              name="doctor.apointmentFee"
+              name="doctor.appointmentFee"
               type="number"
               label="ApointmentFee"
               fullWidth={true}
