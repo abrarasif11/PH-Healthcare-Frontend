@@ -2,16 +2,20 @@
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
-import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
+import {
+  useDeleteSpecialtyMutation,
+  useGetAllSpecialtiesQuery,
+} from "@/redux/api/specialtiesApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import SpecialtyModel from "./components/SpecialtyModal";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data, isLoading } = useGetAllSpecialtiesQuery({});
-
+  const [deleteSpecialty] = useDeleteSpecialtyMutation();
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteSpecialty(id).unwrap();
@@ -32,7 +36,17 @@ const SpecialtiesPage = () => {
       flex: 1,
       renderCell: ({ row }) => {
         return (
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 48,
+              height: 48,
+              paddingY: 1,
+              marginBottom: 1,
+            }}
+          >
             <Image src={row.icon} width={30} height={30} alt="icon" />
           </Box>
         );
