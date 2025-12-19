@@ -21,7 +21,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
   const handleFormSubmit = async (values: FieldValues) => {
     // console.log(values);
     values.doctor.experience = Number(values.doctor.experience);
-    values.doctor.apointmentFee = Number(values.doctor.apointmentFee);
+    values.doctor.appointmentFee = Number(values.doctor.appointmentFee);
     // const data = modifyPayload(values);
     // try {
     //   const res = await createDoctor(data).unwrap();
@@ -119,7 +119,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <PHInput
+            <PHSelectField
               items={Gender}
               name="doctor.gender"
               label="Gender"
