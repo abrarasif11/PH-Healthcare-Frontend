@@ -62,7 +62,7 @@ export const doctorApi = baseApi.injectEndpoints({
 
 export const {
   useCreateDoctorMutation,
-  //   useGetAllDoctorsQuery,
+  useGetAllDoctorsQuery,
   //   useDeleteDoctorMutation,
   //   useGetDoctorQuery,
   //   useUpdateDoctorMutation,
