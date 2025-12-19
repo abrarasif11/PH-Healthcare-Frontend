@@ -12,7 +12,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import logo from "../../assets/svgs/logo.svg";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { modifyPayload } from "@/utils/modifyFormData";
+import { modifyPayload } from "@/utils/modifyPayload";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";

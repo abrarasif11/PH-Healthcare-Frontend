@@ -3,7 +3,7 @@ import PHForms from "@/components/Forms/PHForms";
 import PHInput from "@/components/Forms/PHInput";
 import PHModal from "@/components/Shared/PHModal/PHModal";
 import { useCreateSpecialtyMutation } from "@/redux/api/specialtiesApi";
-import { modifyPayload } from "@/utils/modifyFormData";
+import { modifyPayload } from "@/utils/modifyPayload";
 import { Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";

@@ -6,6 +6,8 @@ import PHSelectField from "@/components/Forms/PHSelectField";
 import PHFullScreenModal from "@/components/Shared/PHModal/PHFullScreenModal";
 import { toast } from "sonner";
 import PHForms from "@/components/Forms/PHForms";
+import { useCreateDoctorMutation } from "@/redux/api/doctorsApi";
+import { modifyPayload } from "@/utils/modifyPayload";
 
 type TProps = {
   open: boolean;
@@ -18,17 +20,17 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
     console.log(values);
     values.doctor.experience = Number(values.doctor.experience);
     values.doctor.appointmentFee = Number(values.doctor.appointmentFee);
-    // const data = modifyPayload(values);
-    // try {
-    //   const res = await createDoctor(data).unwrap();
-    //   console.log(res);
-    //   if (res?.id) {
-    //     toast.success("Doctor created successfully!!!");
-    //     setOpen(false);
-    //   }
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+    const data = modifyPayload(values);
+    try {
+      const res = await createDoctor(data).unwrap();
+      console.log(res);
+      if (res?.id) {
+        toast.success("Doctor created successfully!!!");
+        setOpen(false);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   const defaultValues = {
