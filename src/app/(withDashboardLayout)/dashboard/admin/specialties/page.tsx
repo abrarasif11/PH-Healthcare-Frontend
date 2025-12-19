@@ -1,31 +1,43 @@
 "use client";
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import SpecialtyModel from "./components/SpecialtyModel";
+import SpecialtyModel from "./components/SpecialtyModal";
+import Image from "next/image";
 
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data, isLoading } = useGetAllSpecialtiesQuery({});
 
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteSpecialty(id).unwrap();
+      if (res?.id) {
+        toast.success("Specialty deleted successfully!!!");
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   // console.log(data);
   const columns: GridColDef[] = [
     { field: "title", headerName: "Title", width: 400 },
-    // {
-    //   field: "icon",
-    //   headerName: "Icon",
-    //   flex: 1,
-    //   renderCell: ({ row }) => {
-    //     return (
-    //       <Box>
-    //         <Image src={row.icon} width={30} height={30} alt="icon" />
-    //       </Box>
-    //     );
-    //   },
-    // },
+    {
+      field: "icon",
+      headerName: "Icon",
+      flex: 1,
+      renderCell: ({ row }) => {
+        return (
+          <Box>
+            <Image src={row.icon} width={30} height={30} alt="icon" />
+          </Box>
+        );
+      },
+    },
     {
       field: "action",
       headerName: "Action",
@@ -33,7 +45,16 @@ const SpecialtiesPage = () => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        return <></>;
+        return (
+          <>
+            <IconButton
+              onClick={() => handleDelete(row.id)}
+              aria-label="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        );
       },
     },
   ];

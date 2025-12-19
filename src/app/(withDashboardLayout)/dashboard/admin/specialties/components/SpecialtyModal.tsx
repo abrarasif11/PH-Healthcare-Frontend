@@ -14,7 +14,7 @@ type TProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SpecialtyModel = ({ open, setOpen }: TProps) => {
+const SpecialtyModal = ({ open, setOpen }: TProps) => {
   const [createSpecialty] = useCreateSpecialtyMutation();
   const handleFormSubmit = async (values: FieldValues) => {
     const data = modifyPayload(values);
@@ -47,4 +47,4 @@ const SpecialtyModel = ({ open, setOpen }: TProps) => {
   );
 };
 
-export default SpecialtyModel;
+export default SpecialtyModal;
