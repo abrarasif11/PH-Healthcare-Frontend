@@ -2,10 +2,14 @@
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import DoctorModal from "./components/DoctorModal";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorsApi";
+import {
+  useDeleteDoctorMutation,
+  useGetAllDoctorsQuery,
+} from "@/redux/api/doctorsApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDebounced } from "@/redux/hooks";
+import { toast } from "sonner";
 
 const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -21,15 +25,16 @@ const DoctorsPage = () => {
   }
 
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
+  const [deleteDoctor] = useDeleteDoctorMutation();
 
   const doctors = data?.doctors;
   const meta = data?.meta;
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await deleteSpecialty(id).unwrap();
+      const res = await deleteDoctor(id).unwrap();
       if (res?.id) {
-        toast.success("Specialty deleted successfully!!!");
+        toast.success("Doctor deleted successfully!!!");
       }
     } catch (err: any) {
       console.error(err.message);
