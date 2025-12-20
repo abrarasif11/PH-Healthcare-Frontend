@@ -15,7 +15,7 @@ const ScheduleModal = ({ open, setOpen }: TProps) => {
   //   const [createSchedule] = useCreateScheduleMutation();
 
   const handleFormSubmit = async (values: FieldValues) => {
-    // console.log(values);
+    console.log(values);
     // values.startDate = dateFormatter(values.startDate);
     // values.endDate = dateFormatter(values.endDate);
     // values.startTime = timeFormatter(values.startTime);
