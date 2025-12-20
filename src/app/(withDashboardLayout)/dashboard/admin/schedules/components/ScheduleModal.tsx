@@ -1,3 +1,4 @@
+import PHDatePicker from "@/components/Forms/PHDatePicker";
 import PHForms from "@/components/Forms/PHForms";
 import PHModal from "@/components/Shared/PHModal/PHModal";
 
@@ -37,7 +38,7 @@ const ScheduleModal = ({ open, setOpen }: TProps) => {
       <PHForms onSubmit={handleFormSubmit}>
         <Grid container spacing={2} sx={{ width: "400px" }}>
           <Grid item md={12}>
-            {/* <PHDatePicker name="startDate" label="Start Date" /> */}
+            <PHDatePicker name="startDate" label="Start Date" />
           </Grid>
           <Grid item md={12}>
             {/* <PHDatePicker name="endDate" label="End Date" /> */}
