@@ -5,24 +5,32 @@ import DoctorModal from "./components/DoctorModal";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorsApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useDebounced } from "@/redux/hooks";
 
 const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  query["searchTerm"] = searchTerm;
+
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+  if (!!debouncedTerm) {
+    query["searchTerm"] = searchTerm;
+  }
+
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
-  // console.log(data);
+
   const doctors = data?.doctors;
   const meta = data?.meta;
-  // console.log(doctors);
 
   const handleDelete = async (id: string) => {
     try {
-      // const res = await deleteSpecialty(id).unwrap();
-      // if (res?.id) {
-      //   toast.success("Specialty deleted successfully!!!");
-      // }
+      const res = await deleteSpecialty(id).unwrap();
+      if (res?.id) {
+        toast.success("Specialty deleted successfully!!!");
+      }
     } catch (err: any) {
       console.error(err.message);
     }
