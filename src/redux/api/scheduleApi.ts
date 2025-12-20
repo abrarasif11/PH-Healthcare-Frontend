@@ -1,6 +1,7 @@
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 import { IMeta } from "@/types/common";
+import { ISchedule } from "@/types/doctor/schedule";
 
 export const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,20 +13,19 @@ export const scheduleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.schedule],
     }),
-    getAllSchedules: build.query({
-      query: (arg: Record<string, any>) => {
-        return {
-          url: "/schedule",
-          method: "GET",
-          params: arg,
-        };
-      },
-      transformResponse: (response: [], meta: IMeta) => {
-        return {
-          schedules: response,
-          meta,
-        };
-      },
+    getAllSchedules: build.query<
+      { schedules: ISchedule[]; meta: IMeta },
+      Record<string, any>
+    >({
+      query: (arg) => ({
+        url: "/schedule",
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: ISchedule[], meta: IMeta) => ({
+        schedules: response,
+        meta,
+      }),
       providesTags: [tagTypes.schedule],
     }),
 
