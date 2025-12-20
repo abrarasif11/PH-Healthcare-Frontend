@@ -1,10 +1,10 @@
 import PHDatePicker from "@/components/Forms/PHDatePicker";
 import PHForms from "@/components/Forms/PHForms";
+import PHTimePicker from "@/components/Forms/PHTimePicker";
 import PHModal from "@/components/Shared/PHModal/PHModal";
-
+import { dateFormatter } from "@/utils/dateFormatter";
 import { Button, Grid } from "@mui/material";
 import { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
 
 type TProps = {
   open: boolean;
@@ -15,11 +15,10 @@ const ScheduleModal = ({ open, setOpen }: TProps) => {
   //   const [createSchedule] = useCreateScheduleMutation();
 
   const handleFormSubmit = async (values: FieldValues) => {
-    console.log(values);
-    // values.startDate = dateFormatter(values.startDate);
-    // values.endDate = dateFormatter(values.endDate);
-    // values.startTime = timeFormatter(values.startTime);
-    // values.endTime = timeFormatter(values.endTime);
+    // console.log(values);
+    values.startDate = dateFormatter(values.startDate);
+    values.endDate = dateFormatter(values.endDate);
+
     // console.log(values);
     try {
       //   const res = await createSchedule(values).unwrap();
@@ -44,10 +43,10 @@ const ScheduleModal = ({ open, setOpen }: TProps) => {
             <PHDatePicker name="endDate" label="End Date" />
           </Grid>
           <Grid item md={6}>
-            {/* <PHTimePicker name="startTime" label="Start Time" /> */}
+            <PHTimePicker name="startTime" label="Start Time" />
           </Grid>
           <Grid item md={6}>
-            {/* <PHTimePicker name="endTime" label="End Time" /> */}
+            <PHTimePicker name="endTime" label="End Time" />
           </Grid>
         </Grid>
         <Button type="submit" sx={{ mt: 1 }}>
