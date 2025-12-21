@@ -66,7 +66,7 @@ export default function DashboardDrawer({
               component="div"
               sx={{ color: "rgba(11, 17, 52, 0.6)" }}
             >
-              Hi, User..
+              Hi, {isLoading ? "Loading..." : data?.name}
             </Typography>
             <Typography
               variant="body2"
