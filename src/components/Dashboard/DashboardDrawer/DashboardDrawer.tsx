@@ -12,6 +12,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
 import { Avatar, Badge, Stack } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import AccountMenu from "../AccountMenu/AccountMenu";
 
 const drawerWidth = 240;
 
@@ -23,7 +24,6 @@ export default function DashboardDrawer({
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const { data, isLoading } = useGetSingleUserQuery({});
-  // console.log(data);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -89,7 +89,7 @@ export default function DashboardDrawer({
               </IconButton>
             </Badge>
             <Avatar alt={data?.name} src={data?.profilePhoto} />
-            {/* <AccountMenu /> */}
+            <AccountMenu />
           </Stack>
         </Toolbar>
       </AppBar>
