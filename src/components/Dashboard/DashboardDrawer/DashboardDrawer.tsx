@@ -10,6 +10,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Sidebar from "../Sidebar/Sidebar";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
+import { Avatar, Badge, Stack } from "@mui/material";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 const drawerWidth = 240;
 
@@ -21,6 +23,7 @@ export default function DashboardDrawer({
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const { data, isLoading } = useGetSingleUserQuery({});
+  // console.log(data);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -79,6 +82,15 @@ export default function DashboardDrawer({
               Welcome To, PH Health Care
             </Typography>
           </Box>
+          <Stack direction="row" gap={3}>
+            <Badge badgeContent={1} color="primary">
+              <IconButton sx={{ background: "#ffffff" }}>
+                <NotificationsNoneIcon color="action" />
+              </IconButton>
+            </Badge>
+            <Avatar alt={data?.name} src={data?.profilePhoto} />
+            {/* <AccountMenu /> */}
+          </Stack>
         </Toolbar>
       </AppBar>
       <Box
@@ -86,7 +98,6 @@ export default function DashboardDrawer({
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
@@ -101,7 +112,7 @@ export default function DashboardDrawer({
           }}
           slotProps={{
             root: {
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             },
           }}
         >
