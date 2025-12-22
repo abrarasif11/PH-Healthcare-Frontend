@@ -2,6 +2,7 @@
 import PHForms from "@/components/Forms/PHForms";
 import PHInput from "@/components/Forms/PHInput";
 import PHSelectField from "@/components/Forms/PHSelectField";
+import { useGetDoctorQuery } from "@/redux/api/doctorsApi";
 import { Gender } from "@/types";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
@@ -12,7 +13,9 @@ type TParams = {
   };
 };
 const DoctorUpdatePage = ({ params }: TParams) => {
-  console.log(params?.doctorId);
+  const id = params?.doctorId;
+  const { data, isLoading } = useGetDoctorQuery(id);
+  console.log(data);
 
   const defaultValues = {
     email: "",
