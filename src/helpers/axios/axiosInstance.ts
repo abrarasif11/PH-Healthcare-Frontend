@@ -1,9 +1,6 @@
 import { authKey } from "@/contants/authKey";
-import {
-  IGenericErrorMessage,
-  IGenericErrorResponse,
-  ResponseSuccessType,
-} from "@/types";
+import { getNewAccessToken } from "@/services/auth.services";
+import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
@@ -41,14 +38,21 @@ instance.interceptors.response.use(
     };
     return responseObject;
   },
-  function (error) {
-    const responseObject: IGenericErrorResponse = {
-      statusCode: error?.response?.data?.statusCode || 500,
-      message: error?.response?.data?.message || "Something Went Wrong",
-      errorMessages: error?.response?.data?.message,
-    };
-    // return Promise.reject(error);
-    return responseObject;
+  async function (error) {
+    const config = error.config;
+    if (error?.response?.status === 500) {
+      const response = await getNewAccessToken();
+      const accessToken = response?.data?.accessToken;
+      config.headers["Authorization"] = accessToken;
+    } else {
+      const responseObject: IGenericErrorResponse = {
+        statusCode: error?.response?.data?.statusCode || 500,
+        message: error?.response?.data?.message || "Something Went Wrong",
+        errorMessages: error?.response?.data?.message,
+      };
+      // return Promise.reject(error);
+      return responseObject;
+    }
   }
 );
 
