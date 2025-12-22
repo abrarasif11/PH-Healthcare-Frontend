@@ -9,7 +9,9 @@ import {
 } from "@/redux/api/doctorsApi";
 import { Gender } from "@/types";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 type TParams = {
   params: {
@@ -18,9 +20,10 @@ type TParams = {
 };
 
 const DoctorUpdatePage = ({ params }: TParams) => {
+  const router = useRouter();
   const id = params.doctorId;
   const { data, isLoading } = useGetDoctorQuery(id);
-  const [] = useUpdateDoctorMutation();
+  const [updateDoctor] = useUpdateDoctorMutation();
 
   if (isLoading) {
     return <Typography>Loading...</Typography>;
@@ -49,7 +52,17 @@ const DoctorUpdatePage = ({ params }: TParams) => {
     values.experience = Number(values.experience);
     values.appointmentFee = Number(values.appointmentFee);
     values.id = id;
-    console.log("Updated Values:", values);
+    // console.log("Updated Values:", values);
+    try {
+      const res = await updateDoctor({ id: values.id, body: values }).unwrap();
+      if (res?.id) {
+        toast.success("Doctor Updated Successfully");
+        router.push("/dashboard/admin/doctors");
+      }
+      console.log(res);
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   return (
@@ -58,7 +71,10 @@ const DoctorUpdatePage = ({ params }: TParams) => {
         Update Doctor
       </Typography>
 
-      <PHForms onSubmit={handleFormSubmit} defaultValues={defaultValues}>
+      <PHForms
+        onSubmit={handleFormSubmit}
+        defaultValues={data && defaultValues}
+      >
         <Grid container spacing={2} sx={{ my: 5 }}>
           <Grid item xs={12} md={4}>
             <PHInput name="name" label="Name" fullWidth sx={{ mb: 2 }} />
