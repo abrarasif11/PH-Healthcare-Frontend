@@ -3,7 +3,10 @@
 import PHForms from "@/components/Forms/PHForms";
 import PHInput from "@/components/Forms/PHInput";
 import PHSelectField from "@/components/Forms/PHSelectField";
-import { useGetDoctorQuery } from "@/redux/api/doctorsApi";
+import {
+  useGetDoctorQuery,
+  useUpdateDoctorMutation,
+} from "@/redux/api/doctorsApi";
 import { Gender } from "@/types";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { FieldValues } from "react-hook-form";
@@ -17,6 +20,7 @@ type TParams = {
 const DoctorUpdatePage = ({ params }: TParams) => {
   const id = params.doctorId;
   const { data, isLoading } = useGetDoctorQuery(id);
+  const [] = useUpdateDoctorMutation();
 
   if (isLoading) {
     return <Typography>Loading...</Typography>;
@@ -44,6 +48,7 @@ const DoctorUpdatePage = ({ params }: TParams) => {
   const handleFormSubmit = async (values: FieldValues) => {
     values.experience = Number(values.experience);
     values.appointmentFee = Number(values.appointmentFee);
+    values.id = id;
     console.log("Updated Values:", values);
   };
 
