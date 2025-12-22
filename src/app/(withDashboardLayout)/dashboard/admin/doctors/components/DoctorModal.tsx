@@ -126,9 +126,9 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput
-              name="doctor.apointmentFee"
+              name="doctor.appointmentFee"
               type="number"
-              label="ApointmentFee"
+              label="AppointmentFee"
               fullWidth={true}
               sx={{ mb: 2 }}
             />
