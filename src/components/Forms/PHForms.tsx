@@ -1,6 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import {
-  FieldValue,
   FieldValues,
   FormProvider,
   SubmitHandler,
@@ -23,21 +24,33 @@ const PHForms = ({
   resolver,
   defaultValues,
 }: TFormProps) => {
-  const fromConfig: TFormConfig = {};
+  const formConfig: TFormConfig = {};
 
   if (resolver) {
-    fromConfig["resolver"] = resolver;
+    formConfig.resolver = resolver;
   }
+
   if (defaultValues) {
-    fromConfig["defaultValues"] = defaultValues;
+    formConfig.defaultValues = defaultValues;
   }
-  const methods = useForm(fromConfig);
+
+  const methods = useForm(formConfig);
   const { handleSubmit, reset } = methods;
+
+  /**
+   * IMPORTANT FIX
+   * Reset form when async defaultValues arrive
+   */
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
+
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
     onSubmit(data);
-    reset();
   };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(submit)}>{children}</form>
