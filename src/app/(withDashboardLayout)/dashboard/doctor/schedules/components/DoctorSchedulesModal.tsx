@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
+import MultipleSelectFieldChip from "./MultipleSelectFieldChip";
 
 type TProps = {
   open: boolean;
@@ -12,6 +13,7 @@ type TProps = {
 };
 const DoctorSchedulesModal = ({ open, setOpen }: TProps) => {
   const [selectedDate, setSelectedDate] = useState(dayjs().toISOString());
+  const [selectedScheduleIds, setSelectedScheduleIds] = useState();
   const query: Record<string, any> = {};
   if (!!selectedDate) {
     query["startDate"] = dayjs(selectedDate)
@@ -39,6 +41,7 @@ const DoctorSchedulesModal = ({ open, setOpen }: TProps) => {
           }
         />
       </LocalizationProvider>
+      <MultipleSelectFieldChip schedules={schedules} />
     </PHModal>
   );
 };
