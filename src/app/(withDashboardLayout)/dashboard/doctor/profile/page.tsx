@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ProfileUpdateModal from "./components/ProfileUpdateModal";
 import AutoFileUploader from "@/components/Forms/AutoFileUploader";
+import DoctorInformation from "./components/DoctorInformation";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,7 +81,7 @@ const Profile = () => {
             </Button>
           </Grid>
           <Grid xs={12} md={8}>
-            {/* <DoctorInformation data={data} /> */}
+            <DoctorInformation data={data} />
           </Grid>
         </Grid>
       </Container>
