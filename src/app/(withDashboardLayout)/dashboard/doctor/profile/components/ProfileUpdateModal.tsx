@@ -162,9 +162,9 @@ const ProfileUpdateModal = ({ open, setOpen, id }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput
-              name="apointmentFee"
+              name="appointmentFee"
               type="number"
-              label="ApointmentFee"
+              label="Appointment Fee"
               sx={{ mb: 2 }}
               fullWidth
             />
