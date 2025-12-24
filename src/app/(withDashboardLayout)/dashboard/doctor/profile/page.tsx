@@ -8,6 +8,7 @@ import { Box, Button, Container, Grid } from "@mui/material";
 
 import Image from "next/image";
 import React, { useState } from "react";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ProfileUpdateModal from "./components/ProfileUpdateModal";
@@ -65,7 +66,7 @@ const Profile = () => {
                 <AutoFileUploader
                   name="file"
                   label="Choose Your Profile Photo"
-                  //   icon={<CloudUploadIcon />}
+                  icon={<CloudUploadIcon />}
                   onFileUpload={fileUploadHandler}
                   variant="text"
                 />
