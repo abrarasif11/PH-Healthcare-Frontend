@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { Theme, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -10,6 +12,7 @@ import Chip from "@mui/material/Chip";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -20,45 +23,37 @@ const MenuProps = {
 };
 
 export function getTimeIn12HourFormat(dateTimeString: string): string {
-  const date: Date = new Date(dateTimeString);
-  const hours: number = date.getHours();
-  const minutes: number = date.getMinutes();
-  const ampm: string = hours >= 12 ? "PM" : "AM";
-  const formattedHours: number = hours % 12 === 0 ? 12 : hours % 12;
-  const formattedMinutes: string =
-    minutes < 10 ? "0" + minutes : minutes.toString();
+  const date = new Date(dateTimeString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
+
   return `${formattedHours}:${formattedMinutes} ${ampm}`;
 }
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(id: string, selectedIds: readonly string[], theme: Theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      selectedIds.indexOf(id) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
+type Props = {
+  schedules?: any[];
+  selectedScheduleIds?: string[];
+  setSelectedScheduleIds: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
 export default function MultipleSelectFieldChip({
-  schedules,
-  selectedScheduleIds,
+  schedules = [], // ✅ SAFE DEFAULT
+  selectedScheduleIds = [], // ✅ SAFE DEFAULT
   setSelectedScheduleIds,
-}: any) {
+}: Props) {
   const theme = useTheme();
-  // const [personName, setPersonName] = React.useState<string[]>([]);
 
   const handleChange = (
     event: SelectChangeEvent<typeof selectedScheduleIds>
@@ -66,45 +61,46 @@ export default function MultipleSelectFieldChip({
     const {
       target: { value },
     } = event;
+
     setSelectedScheduleIds(
-      // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          value={selectedScheduleIds}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => {
-            return (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => {
-                  const selectedSchedule = schedules.find(
-                    (schedule: any) => schedule.id === value
-                  );
+    <FormControl sx={{ width: 300 }} fullWidth>
+      <InputLabel id="multiple-chip-label">Schedules</InputLabel>
 
-                  if (!selectedSchedule) return null;
+      <Select
+        labelId="multiple-chip-label"
+        multiple
+        value={selectedScheduleIds}
+        onChange={handleChange}
+        input={<OutlinedInput label="Schedules" />}
+        renderValue={(selected) => (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            {selected.map((id) => {
+              const schedule = schedules.find((s) => s.id === id);
 
-                  const formattedTimeSlot = `${getTimeIn12HourFormat(
-                    selectedSchedule.startDate
-                  )} - ${getTimeIn12HourFormat(selectedSchedule.endDate)}`;
+              if (!schedule) return null;
 
-                  return <Chip key={value} label={formattedTimeSlot} />;
-                })}
-              </Box>
-            );
-          }}
-          MenuProps={MenuProps}
-        >
-          {schedules.map((schedule: any) => (
+              return (
+                <Chip
+                  key={id}
+                  label={`${getTimeIn12HourFormat(
+                    schedule.startDate
+                  )} - ${getTimeIn12HourFormat(schedule.endDate)}`}
+                />
+              );
+            })}
+          </Box>
+        )}
+        MenuProps={MenuProps}
+      >
+        {schedules.length === 0 ? (
+          <MenuItem disabled>No schedules available</MenuItem>
+        ) : (
+          schedules.map((schedule) => (
             <MenuItem
               key={schedule.id}
               value={schedule.id}
@@ -114,9 +110,9 @@ export default function MultipleSelectFieldChip({
                 schedule.startDate
               )} - ${getTimeIn12HourFormat(schedule.endDate)}`}
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+          ))
+        )}
+      </Select>
+    </FormControl>
   );
 }
