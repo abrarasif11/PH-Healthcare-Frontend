@@ -1,23 +1,35 @@
-import { USER_ROLE } from "@/contants/role";
 import { DrawerItem, UserRole } from "@/types";
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ReviewsIcon from "@mui/icons-material/Reviews";
+
 import TryIcon from "@mui/icons-material/Try";
+import PersonIcon from "@mui/icons-material/Person";
+
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import PersonIcon from "@mui/icons-material/Person";
+import { USER_ROLE } from "@/contants/role";
 
 export const drawerItems = (role: UserRole): DrawerItem[] => {
-  const defaultMenus = {
-    title: "Profile",
-    path: `${role}/profile`,
-    icon: PersonIcon,
-  };
   const roleMenus: DrawerItem[] = [];
+
+  const defaultMenus = [
+    {
+      title: "Profile",
+      path: `${role}/profile`,
+      icon: PersonIcon,
+    },
+    // {
+    //   title: "Change Password",
+    //   path: `change-password`,
+    //   icon: KeyIcon,
+    // },
+  ];
+
   switch (role) {
     case USER_ROLE.SUPER_ADMIN:
       roleMenus.push(
@@ -33,6 +45,7 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         }
       );
       break;
+
     case USER_ROLE.ADMIN:
       roleMenus.push(
         {
@@ -67,6 +80,7 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         }
       );
       break;
+
     case USER_ROLE.DOCTOR:
       roleMenus.push(
         {
@@ -86,6 +100,7 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         }
       );
       break;
+
     case USER_ROLE.PATIENT:
       roleMenus.push(
         {
@@ -105,8 +120,10 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         }
       );
       break;
+
     default:
       break;
   }
+
   return [...roleMenus, ...defaultMenus];
 };
