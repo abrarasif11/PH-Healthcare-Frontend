@@ -17,10 +17,8 @@ import DoctorInformation from "./components/DoctorInformation";
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // image state
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
-  // persistent cache buster (survives re-render, resets only on reload)
   const imageVersionRef = useRef<number>(Date.now());
 
   const { data, isLoading, refetch } = useGetMYProfileQuery(undefined);
@@ -28,21 +26,14 @@ const Profile = () => {
   const [updateMYProfile, { isLoading: uploading }] =
     useUpdateMYProfileMutation();
 
-  /**
-   * Sync backend image on load & reload
-   */
   useEffect(() => {
     if (data?.profilePhoto) {
       setImageSrc(data.profilePhoto);
-      imageVersionRef.current = Date.now(); // bust cache on reload
+      imageVersionRef.current = Date.now();
     }
   }, [data?.profilePhoto]);
 
-  /**
-   * Upload handler
-   */
   const fileUploadHandler = async (file: File) => {
-    // Local preview
     const previewUrl = URL.createObjectURL(file);
     setImageSrc(previewUrl);
 
@@ -54,7 +45,6 @@ const Profile = () => {
       await updateMYProfile(formData).unwrap();
       await refetch();
 
-      // force new version after upload
       imageVersionRef.current = Date.now();
     } catch (error) {
       console.error("Profile image update failed", error);
@@ -91,7 +81,6 @@ const Profile = () => {
             >
               {imageSrc ? (
                 imageSrc.startsWith("blob:") ? (
-                  // Local preview
                   <img
                     src={imageSrc}
                     alt="Profile Photo"

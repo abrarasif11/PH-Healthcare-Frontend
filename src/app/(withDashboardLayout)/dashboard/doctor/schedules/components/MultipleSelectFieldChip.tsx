@@ -49,8 +49,8 @@ type Props = {
 };
 
 export default function MultipleSelectFieldChip({
-  schedules = [], // ✅ SAFE DEFAULT
-  selectedScheduleIds = [], // ✅ SAFE DEFAULT
+  schedules = [],
+  selectedScheduleIds = [],
   setSelectedScheduleIds,
 }: Props) {
   const theme = useTheme();
