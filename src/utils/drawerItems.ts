@@ -1,3 +1,4 @@
+"use client";
 import { DrawerItem, UserRole } from "@/types";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
@@ -10,6 +11,7 @@ import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { USER_ROLE } from "@/contants/role";
+import KeyIcon from "@mui/icons-material/Key";
 
 export const drawerItems = (role: UserRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = [];
@@ -20,11 +22,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
       path: `${role}/profile`,
       icon: PersonIcon,
     },
-    // {
-    //   title: "Change Password",
-    //   path: `change-password`,
-    //   icon: KeyIcon,
-    // },
+    {
+      title: "Change Password",
+      path: `change-password`,
+      icon: KeyIcon,
+    },
   ];
 
   switch (role) {
