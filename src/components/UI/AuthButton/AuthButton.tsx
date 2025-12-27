@@ -1,5 +1,6 @@
 import { authKey } from "@/contants/authKey";
 import { deleteCookies } from "@/services/actions/deleteCookies";
+import { logoutUser } from "@/services/actions/logOutUser";
 import { getUserInfo, removeUser } from "@/services/auth.services";
 import { Button } from "@mui/material";
 import { cookies } from "next/headers";
@@ -11,10 +12,7 @@ const AuthButton = () => {
   console.log(userinfo);
   const router = useRouter();
   const handleLogout = () => {
-    localStorage.removeItem(authKey);
-    deleteCookies([authKey, "refreshToken"]);
-    router.push("/");
-    router.refresh();
+    logoutUser(router);
   };
   return (
     <>
