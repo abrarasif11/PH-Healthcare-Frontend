@@ -1,4 +1,5 @@
 import { authKey } from "@/contants/authKey";
+import { deleteCookies } from "@/services/actions/deleteCookies";
 import { getUserInfo, removeUser } from "@/services/auth.services";
 import { Button } from "@mui/material";
 import { cookies } from "next/headers";
@@ -11,7 +12,8 @@ const AuthButton = () => {
   const router = useRouter();
   const handleLogout = () => {
     localStorage.removeItem(authKey);
-    cookies().delete();
+    deleteCookies([authKey, "refreshToken"]);
+    router.push("/");
     router.refresh();
   };
   return (
