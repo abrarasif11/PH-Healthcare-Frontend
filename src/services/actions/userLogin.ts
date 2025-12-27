@@ -1,9 +1,8 @@
 // "use server";
 
 import { FieldValues } from "react-hook-form";
-import { cookies } from "next/headers";
-import { authKey } from "@/contants/authKey";
-import { redirect } from "next/navigation";
+
+import setAccessToken from "./setAcessToken";
 
 export const userLogin = async (data: FieldValues) => {
   const res = await fetch(
@@ -21,8 +20,9 @@ export const userLogin = async (data: FieldValues) => {
   const userInfo = await res.json();
 
   if (userInfo.data.accessToken) {
-    cookies().set(authKey, userInfo.data.accessToken);
-    redirect("/dashboard");
+    setAccessToken(userInfo.data.accessToken, {
+      redirect: "/dashboard",
+    });
   }
   return userInfo;
 };
